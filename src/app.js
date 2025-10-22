@@ -51,7 +51,11 @@ export default async function () {
       Object.entries(elements.fields).forEach(([fieldName, fieldElement]) => {
         state.form.fields[fieldName] = ''
         fieldElement.value = ''
+        elements.error.textContent = `${i18nextInstance.t('form.success')}`
+        elements.error.classList.add('text-success')
       })
+    } else {
+      elements.error.classList.remove('text-success')
     }
   })
 }
