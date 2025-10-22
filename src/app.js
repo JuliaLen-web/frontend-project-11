@@ -50,7 +50,7 @@ export default function () {
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault()
     watcherState.processState = processState.validation
-    const error = validate(state.form.data)
+    const error = validate(state.form.data, state.doneUrl)
     watcherState.form.error = error
     if (error === '') {
       watcherState.processState = processState.pending

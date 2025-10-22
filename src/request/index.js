@@ -3,6 +3,7 @@ import { uniqueId } from "lodash"
 import { processState } from "../app.js"
 
 const handlerFormRequest = (watcherState, state) => {
+  console.log(state.doneUrl)
   axios.get(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(state.form.data)}`, {
     timeout: 10000 // Таймаут 10 секунд
   })
@@ -15,11 +16,11 @@ const handlerFormRequest = (watcherState, state) => {
     .then(data => {
       // console.log(data?.contents)
       if (data?.contents.includes('<?xml') || data?.contents.includes('<rss')) {
-        state.doneUrl = {
+        watcherState.doneUrl.push({
           url: data?.status?.url,
           data: data?.contents,
           id: uniqueId('url_')
-        }
+        })
       } else {
         watcherState.form.error = 'form.errors.isNotRss'
       }
