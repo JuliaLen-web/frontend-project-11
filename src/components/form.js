@@ -13,15 +13,15 @@ export default function (i18n) {
                   id="url-input" autofocus="" type="text" required="" name="url" aria-label="url" 
                   class="form-control w-100" placeholder="ссылка RSS" autocomplete="off"
                 >
-                <label for="url-input">Ссылка RSS</label>
+                <label for="url-input">${i18n.t('form.placeholder')}</label>
               </div>
             </div>
             <div class="col-auto">
-              <button type="submit" aria-label="add" class="h-100 btn btn-lg btn-primary px-sm-5">Добавить</button>
+              <button type="submit" aria-label="add" class="h-100 btn btn-lg btn-primary px-sm-5">${i18n.t('form.buttonText')}</button>
             </div>
           </div>
         </form>
-        <p class="mt-2 mb-0 text-secondary">Пример: https://lorem-rss.hexlet.app/feed</p>
+        <p class="mt-2 mb-0 text-secondary">${i18n.t('form.example')}</p>
         <p id="feedback" class="feedback m-0 position-absolute small text-danger"></p>
       </div>
     </div>

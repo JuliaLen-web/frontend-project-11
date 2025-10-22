@@ -3,59 +3,58 @@ import resources from './locales/index'
 import renderMain from './components/main.js'
 import view from "./view.js"
 import validate from "./validate/index.js"
-import isEmpty from 'lodash/isEmpty.js'
+import handlerFormRequest from "./request/index.js"
 
-export default async function () {
+export const processState = {
+  initial: 'initial',
+  validation: 'validation',
+  pending: 'pending',
+  finished: 'finished',
+}
+
+export default function () {
   const i18nextInstance = i18next.createInstance()
-  await i18nextInstance.init({
+  i18nextInstance.init({
     lng: 'ru',
     debug: true,
     resources: resources,
+  }).then().catch((error) => {
+    console.error('i18next initialization failed:', error);
   })
+
   renderMain(i18nextInstance)
   const elements = {
     form: document.querySelector('#formContainer form'),
-    fields: {
-      url: document.querySelector('#url-input'),
-    },
+    input: document.querySelector('#url-input'),
     error: document.querySelector('#feedback'),
   }
 
   const initialState = {
+    processState: processState.initial,
     form: {
-      valid: true,
       error: '',
-      fields: {
-        url: '',
-      },
-    }
+      data: '',
+    },
+    doneUrl: []
   }
 
   const handlerState = {}
   const state = new Proxy(initialState, handlerState)
   const watcherState = view(elements, state, i18nextInstance)
 
-  Object.entries(elements.fields).forEach(([fieldName, fieldElement]) => {
-    fieldElement.addEventListener('input', (e) => {
-      const { value } = e.target
-      state.form.fields[fieldName] = value
-    })
+  elements.input.addEventListener('input', (e) => {
+    const { value } = e.target
+    state.form.data = value
   })
 
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault()
-    const error = validate(state.form.fields)
+    watcherState.processState = processState.validation
+    const error = validate(state.form.data)
     watcherState.form.error = error
-    state.form.valid = isEmpty(error)
-    if (state.form.valid) {
-      Object.entries(elements.fields).forEach(([fieldName, fieldElement]) => {
-        state.form.fields[fieldName] = ''
-        fieldElement.value = ''
-        elements.error.textContent = `${i18nextInstance.t('form.success')}`
-        elements.error.classList.add('text-success')
-      })
-    } else {
-      elements.error.classList.remove('text-success')
+    if (error === '') {
+      watcherState.processState = processState.pending
+      handlerFormRequest(watcherState, state)
     }
   })
 }

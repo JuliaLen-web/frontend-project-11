@@ -1,0 +1,42 @@
+import axios from "axios"
+import { uniqueId } from "lodash"
+import { processState } from "../app.js"
+
+const handlerFormRequest = (watcherState, state) => {
+  axios.get(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(state.form.data)}`, {
+    timeout: 10000 // Таймаут 10 секунд
+  })
+    .then(response => {
+      if (response.status === 200) {
+        return response.data
+      }
+      // throw new Error('Network response was not ok.')
+    })
+    .then(data => {
+      // console.log(data?.contents)
+      if (data?.contents.includes('<?xml') || data?.contents.includes('<rss')) {
+        state.doneUrl = {
+          url: data?.status?.url,
+          data: data?.contents,
+          id: uniqueId('url_')
+        }
+      } else {
+        watcherState.form.error = 'form.errors.isNotRss'
+      }
+    })
+    .catch(error => {
+      console.log(error, ' error pending')
+      switch (error.message) {
+        case 'Network Error':
+          watcherState.form.error = 'form.errors.network'
+          break
+        default:
+          watcherState.form.error = 'form.errors.network'
+      }
+    })
+    .finally(() => {
+      watcherState.processState = processState.finished
+    })
+}
+
+export default handlerFormRequest
