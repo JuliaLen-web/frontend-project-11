@@ -24,7 +24,6 @@ const renderSuccess = (valueData, input, feedback, i18n) => {
 
 const renderStatus = (elements, state, i18n) => {
   const { processState: process, form } = state
-  // console.log(process)
   const input = elements.input
   const feedback = elements.error
   const button = elements.form.querySelector('button[type="submit"]')
@@ -50,12 +49,9 @@ const renderStatus = (elements, state, i18n) => {
   }
 }
 
-// const parserDOM = (state) => {
-//   const { doneUrl } = state
-// }
-
 export default function(elements, state, i18n) {
   return onChange(state, function () {
     renderStatus(elements, state,  i18n)
+    console.log(state.newsItems)
   })
 }

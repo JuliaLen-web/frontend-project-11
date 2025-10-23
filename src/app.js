@@ -35,7 +35,8 @@ export default function () {
       error: '',
       data: '',
     },
-    doneUrl: []
+    doneUrl: [],
+    newsItems: []
   }
 
   const handlerState = {}

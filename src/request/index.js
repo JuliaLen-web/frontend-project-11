@@ -1,10 +1,11 @@
 import axios from "axios"
 import { uniqueId } from "lodash"
 import { processState } from "../app.js"
+import parserDOM from "../parseResult/index.js";
 
 const handlerFormRequest = (watcherState, state) => {
   console.log(state.doneUrl)
-  axios.get(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(state.form.data)}`, {
+  axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(state.form.data)}`, {
     timeout: 10000 // Таймаут 10 секунд
   })
     .then(response => {
@@ -14,13 +15,13 @@ const handlerFormRequest = (watcherState, state) => {
       // throw new Error('Network response was not ok.')
     })
     .then(data => {
-      // console.log(data?.contents)
       if (data?.contents.includes('<?xml') || data?.contents.includes('<rss')) {
-        watcherState.doneUrl.push({
+        state.doneUrl.push({
           url: data?.status?.url,
           data: data?.contents,
           id: uniqueId('url_')
         })
+        parserDOM(watcherState, state.doneUrl)
       } else {
         watcherState.form.error = 'form.errors.isNotRss'
       }
