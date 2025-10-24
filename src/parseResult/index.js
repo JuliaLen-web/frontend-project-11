@@ -20,7 +20,7 @@ const parserDOM = (watchState, newUrlData ) => {
       title: el.querySelector(fields.title).textContent,
       link: el.querySelector(fields.link).textContent,
       description: el.querySelector(fields.description).textContent,
-      id: uniqueId('news_')
+      id: uniqueId('')
     })
   })
 

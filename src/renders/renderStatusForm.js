@@ -1,4 +1,4 @@
-import {processState} from "../app.js";
+import {processState} from "../app.js"
 
 const resetError = (input, feedback) => {
   input.classList.remove('is-invalid')

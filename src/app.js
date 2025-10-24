@@ -4,6 +4,7 @@ import renderMain from './components/main.js'
 import view from "./view.js"
 import validate from "./validate/index.js"
 import handlerFormRequest from "./request/index.js"
+import { Modal } from 'bootstrap'
 
 export const processState = {
   initial: 'initial',
@@ -27,6 +28,9 @@ export default function () {
     form: document.querySelector('#formContainer form'),
     input: document.querySelector('#url-input'),
     error: document.querySelector('#feedback'),
+    modal: document.querySelector('#modal'),
+    posts: document.querySelector('#posts'),
+    feeds: document.querySelector('#feeds')
   }
 
   const initialState = {
@@ -35,8 +39,9 @@ export default function () {
       error: '',
       data: '',
     },
+    newsItems: [],
     doneUrl: [],
-    newsItems: []
+    doneNewsItems: []
   }
 
   const handlerState = {}
@@ -57,5 +62,11 @@ export default function () {
       watcherState.processState = processState.pending
       handlerFormRequest(watcherState, state)
     }
+  })
+
+  new Modal(elements.modal)
+  elements.modal.addEventListener('shown.bs.modal', function (e) {
+    const activeId = e.relatedTarget.dataset.id
+    watcherState.doneNewsItems.push(activeId)
   })
 }
