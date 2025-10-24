@@ -16,20 +16,20 @@ const renderPostsHeader = (container) => {
   `
 }
 
-const renderNewsItem = (item, doneNewsItems) => {
+const renderNewsItem = (item, doneNewsItems, i18n) => {
   const li = document.createElement('li')
   li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0')
   li.innerHTML = `
       <a href="${item.link}" class="${doneNewsItems.includes(item.id) ? 'fw-normal' : 'fw-bold'}" data-id="${item.id}" target="_blank" rel="noopener noreferrer">
         ${item.title}
       </a>
-      <button type="button" class="btn btn-outline-primary btn-sm" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal">Просмотр</button>
+      <button type="button" class="btn btn-outline-primary btn-sm" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#modal">${i18n.t('post.button')}</button>
   `
   return li
 }
 
-const renderPosts = (container, news, doneNewsItems) => {
-  return container ? news.map(item => container.prepend(renderNewsItem(item, doneNewsItems))) : console.error('Not found <ul> for news')
+const renderPosts = (container, news, doneNewsItems, i18n) => {
+  return container ? news.map(item => container.prepend(renderNewsItem(item, doneNewsItems, i18n))) : console.error('Not found <ul> for news')
 }
 
 const renderFeedsItem = (feed) => {
@@ -47,7 +47,7 @@ const renderFeeds = (container, feed) => {
   return container ? container.prepend(renderFeedsItem(feed)) : console.error('Not found <ul> for feeds')
 }
 
-const renderNews = (elements, state) => {
+const renderNews = (elements, state, i18n) => {
   const { doneNewsItems, newsItems } = state
   let ulPosts = elements.posts.querySelector('ul')
   let ulFeeds = elements.feeds.querySelector('ul')
@@ -64,7 +64,7 @@ const renderNews = (elements, state) => {
   }
 
   newsItems.map(newsItem => {
-    renderPosts(ulPosts, newsItem.news, doneNewsItems)
+    renderPosts(ulPosts, newsItem.news, doneNewsItems, i18n)
     renderFeeds(ulFeeds, {title: newsItem.title, description: newsItem.description})
   })
 }

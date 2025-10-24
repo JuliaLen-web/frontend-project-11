@@ -18,7 +18,7 @@ export default function(elements, state, i18n) {
   return onChange(state, function (value, previousValue) {
     switch (value) {
       case "newsItems":
-        renderNews(elements, state)
+        renderNews(elements, state, i18n)
         break
       case "doneNewsItems":
         const activePostId = previousValue[previousValue.length - 1]
@@ -26,7 +26,7 @@ export default function(elements, state, i18n) {
         markReadPost(activePostId)
         break
       default:
-        renderStatus(elements, state,  i18n)
+        renderStatus(elements, state, i18n)
     }
   })
 }

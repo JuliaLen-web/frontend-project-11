@@ -3,6 +3,7 @@ import * as yup from 'yup'
 export default function validate(data, array) {
   const schema = yup.object().shape({
     url: yup.string().trim()
+      .required('form.required')
       .url('form.errors.url')
       .notOneOf(array.map(el => el.url), 'form.errors.duplicate')
   })
