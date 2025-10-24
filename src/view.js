@@ -1,7 +1,5 @@
 import onChange from 'on-change'
-import renderStatus from "./renders/renderStatusForm.js"
-import renderNews from "./renders/renderNews.js"
-import renderActivePostModal from "./renders/renderActivePostModal.js";
+import {renderActivePostModal, renderFeeds, renderPosts, renderStatus} from "./components/renderHtml.js";
 
 const markReadPost = (activePostId) => {
   const links = document.querySelectorAll('#posts ul li a')
@@ -17,13 +15,16 @@ const markReadPost = (activePostId) => {
 export default function(elements, state, i18n) {
   return onChange(state, function (value, previousValue) {
     switch (value) {
-      case "newsItems":
-        renderNews(elements, state, i18n)
+      case "posts":
+        console.log(previousValue)
+        renderPosts(elements, state, i18n)
         break
-      case "doneNewsItems":
-        const activePostId = previousValue[previousValue.length - 1]
-        renderActivePostModal(state.newsItems, activePostId)
-        markReadPost(activePostId)
+      case "feeds":
+        renderFeeds(elements, state, i18n)
+        break
+      case "currentPostId":
+        renderActivePostModal(state.posts, state.currentPostId)
+        markReadPost(state.currentPostId)
         break
       default:
         renderStatus(elements, state, i18n)

@@ -1,7 +1,17 @@
 import axios from "axios"
 import { uniqueId } from "lodash"
 import { processState } from "../app.js"
-import parserDOM from "../parseResult/index.js";
+import parserDOM from "../utility/parseXML.js";
+
+const saveUrlData = (data, state) => {
+  const newChannelData = {
+    url: data?.status?.url,
+    data: data?.contents,
+    id: uniqueId('feed_')
+  }
+  state.addedChannels.push({...newChannelData})
+  return newChannelData
+}
 
 const handlerFormRequest = (watcherState, state) => {
   axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(state.form.data)}`, {
@@ -14,14 +24,10 @@ const handlerFormRequest = (watcherState, state) => {
       // throw new Error('Network response was not ok.')
     })
     .then(data => {
-      if (data?.contents && (data?.contents.includes('<?xml') || data?.contents.includes('<rss'))) {
-        const newUrlData = {
-          url: data?.status?.url,
-          data: data?.contents,
-          id: uniqueId('url_')
-        }
-        state.doneUrl.push({...newUrlData})
-        parserDOM(watcherState, newUrlData)
+      const xmlString = data?.contents
+      if (xmlString && (xmlString.includes('<?xml') || xmlString.includes('<rss'))) {
+        const newChannelData = saveUrlData(data, state)
+        parserDOM(watcherState, newChannelData)
       } else {
         watcherState.form.error = 'form.errors.isNotRss'
       }

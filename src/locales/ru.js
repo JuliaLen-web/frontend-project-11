@@ -16,7 +16,15 @@ export default {
       }
     },
     post: {
+      name: 'Посты',
       button: 'Просмотр'
+    },
+    feed: {
+      name: 'Фиды'
+    },
+    modal: {
+      readAll: 'Читать полностью',
+      close: 'Закрыть'
     }
   },
 };
