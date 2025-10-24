@@ -35,16 +35,14 @@ const renderPostsItem = (item, i18n) => {
   return li
 }
 
-export const renderPosts = (elements, state, i18n) => {
+export const renderPosts = (elements, posts, i18n) => {
   let ulPosts = elements.posts.querySelector('ul')
   if (!ulPosts) {
     renderResultHeader(elements.posts, i18n.t('post.name'))
     ulPosts = elements.posts.querySelector('ul')
-  } else {
-    ulPosts.innerHTML = ''
   }
 
-  return ulPosts ? state.posts.map(item => ulPosts.prepend(renderPostsItem(item, i18n))) : console.error('Not found <ul> for news')
+  return ulPosts ? posts.map(item => ulPosts.prepend(renderPostsItem(item, i18n))) : console.error('Not found <ul> for news')
 }
 
 const renderFeedsItem = (feed) => {
@@ -58,18 +56,16 @@ const renderFeedsItem = (feed) => {
   return li
 }
 
-export const renderFeeds = (elements, state, i18n) => {
+export const renderFeeds = (elements, newFeed, i18n) => {
   let ulFeeds = elements.feeds.querySelector('ul')
 
   if (!ulFeeds) {
     renderResultHeader(elements.feeds, i18n.t('feed.name'))
 
     ulFeeds = elements.feeds.querySelector('ul')
-  } else {
-    ulFeeds.innerHTML = ''
   }
 
-  return ulFeeds ? state.feeds.map(item => ulFeeds.prepend(renderFeedsItem(item)))  : console.error('Not found <ul> for feeds')
+  return ulFeeds ? newFeed.map(item => ulFeeds.prepend(renderFeedsItem(item)))  : console.error('Not found <ul> for feeds')
 }
 
 const resetError = (input, feedback) => {

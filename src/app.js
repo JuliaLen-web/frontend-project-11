@@ -3,8 +3,8 @@ import resources from './locales/index'
 import initialHtml from './components/initialHtml.js'
 import view from "./view.js"
 import validate from "./utility/validateForm.js"
-import handlerFormRequest from "./request/getNews.js"
 import { Modal } from 'bootstrap'
+import getNews from "./request/getNews.js"
 
 export const processState = {
   initial: 'initial',
@@ -61,7 +61,7 @@ export default function () {
     watcherState.form.error = error
     if (error === '') {
       watcherState.processState = processState.pending
-      handlerFormRequest(watcherState, state)
+      getNews(watcherState, state)
     }
   })
 

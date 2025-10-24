@@ -1,5 +1,6 @@
 import onChange from 'on-change'
 import {renderActivePostModal, renderFeeds, renderPosts, renderStatus} from "./components/renderHtml.js";
+import {differenceWith} from "lodash/array.js";
 
 const markReadPost = (activePostId) => {
   const links = document.querySelectorAll('#posts ul li a')
@@ -13,14 +14,15 @@ const markReadPost = (activePostId) => {
 }
 
 export default function(elements, state, i18n) {
-  return onChange(state, function (value, previousValue) {
+  return onChange(state, function (value, previousValue, applyData) {
     switch (value) {
       case "posts":
-        console.log(previousValue)
-        renderPosts(elements, state, i18n)
+        const newPosts = differenceWith(previousValue, applyData)
+        renderPosts(elements, newPosts, i18n)
         break
       case "feeds":
-        renderFeeds(elements, state, i18n)
+        const newFeed = differenceWith(previousValue, applyData)
+        renderFeeds(elements, newFeed, i18n)
         break
       case "currentPostId":
         renderActivePostModal(state.posts, state.currentPostId)

@@ -13,7 +13,7 @@ const saveUrlData = (data, state) => {
   return newChannelData
 }
 
-const handlerFormRequest = (watcherState, state) => {
+const getNews = (watcherState, state) => {
   axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(state.form.data)}`, {
     timeout: 10000 // Таймаут 10 секунд
   })
@@ -47,4 +47,4 @@ const handlerFormRequest = (watcherState, state) => {
     })
 }
 
-export default handlerFormRequest
+export default getNews
