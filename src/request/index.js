@@ -14,7 +14,7 @@ const handlerFormRequest = (watcherState, state) => {
       // throw new Error('Network response was not ok.')
     })
     .then(data => {
-      if (data?.contents.includes('<?xml') || data?.contents.includes('<rss')) {
+      if (data?.contents && (data?.contents.includes('<?xml') || data?.contents.includes('<rss'))) {
         const newUrlData = {
           url: data?.status?.url,
           data: data?.contents,
