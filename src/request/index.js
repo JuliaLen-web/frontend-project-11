@@ -4,7 +4,6 @@ import { processState } from "../app.js"
 import parserDOM from "../parseResult/index.js";
 
 const handlerFormRequest = (watcherState, state) => {
-  console.log(state.doneUrl)
   axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(state.form.data)}`, {
     timeout: 10000 // Таймаут 10 секунд
   })
@@ -16,12 +15,13 @@ const handlerFormRequest = (watcherState, state) => {
     })
     .then(data => {
       if (data?.contents.includes('<?xml') || data?.contents.includes('<rss')) {
-        state.doneUrl.push({
+        const newUrlData = {
           url: data?.status?.url,
           data: data?.contents,
           id: uniqueId('url_')
-        })
-        parserDOM(watcherState, state.doneUrl)
+        }
+        state.doneUrl.push({...newUrlData})
+        parserDOM(watcherState, newUrlData)
       } else {
         watcherState.form.error = 'form.errors.isNotRss'
       }

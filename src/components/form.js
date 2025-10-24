@@ -1,6 +1,5 @@
 export default function (i18n) {
   document.querySelector('#formContainer').innerHTML = `
-
     <div class="row">
       <div class="col-md-10 col-lg-8 mx-auto text-white">
         <h1 class="display-3 mb-0">${i18n.t('form.title')}</h1>
@@ -25,6 +24,5 @@ export default function (i18n) {
         <p id="feedback" class="feedback m-0 position-absolute small text-danger"></p>
       </div>
     </div>
-
   `
 }
