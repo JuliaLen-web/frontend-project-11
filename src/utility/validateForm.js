@@ -5,7 +5,7 @@ export default function validate(data, array) {
     url: yup.string().trim()
       .required('form.required')
       .url('form.errors.url')
-      .notOneOf(array.map(el => el.url), 'form.errors.duplicate')
+      .notOneOf(array.map(el => el.link), 'form.errors.duplicate')
   })
 
   try {

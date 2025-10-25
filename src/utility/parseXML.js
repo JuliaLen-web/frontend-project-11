@@ -1,5 +1,3 @@
-import {uniqueId} from "lodash"
-
 const fields = {
   title: 'title',
   description: 'description',
@@ -14,11 +12,11 @@ const formatText = (text) => {
 const parserDOM = (watchState, newUrlData ) => {
   const feedDoc = new DOMParser().parseFromString(newUrlData.data, "text/xml")
 
-  watchState.feeds.push({
+  const feed = {
     title: formatText(feedDoc.querySelector(fields.title)),
     description: formatText(feedDoc.querySelector(fields.description)),
-    feedId: newUrlData.id
-  })
+    link: formatText(feedDoc.querySelector(fields.link)),
+  }
 
   const postsDoc = feedDoc.querySelectorAll(fields.item)
   const posts = []
@@ -27,12 +25,10 @@ const parserDOM = (watchState, newUrlData ) => {
       title: formatText(el.querySelector(fields.title)),
       link: formatText(el.querySelector(fields.link)),
       description: formatText(el.querySelector(fields.description)),
-      id: uniqueId('post_'),
-      feedId: newUrlData.id
     })
   })
 
-  watchState.posts.push(...posts)
+  return { feed, posts }
 }
 
 export default parserDOM

@@ -42,7 +42,8 @@ export default function () {
     posts: [],
     feeds: [],
     currentPostId: null,
-    addedChannels: []
+    addedChannels: [],
+    test: 'klkl'
   }
 
   const handlerState = {}
@@ -61,7 +62,7 @@ export default function () {
     watcherState.form.error = error
     if (error === '') {
       watcherState.processState = processState.pending
-      getNews(watcherState, state)
+      getNews(watcherState, state.form.data)
     }
   })
 
@@ -69,4 +70,24 @@ export default function () {
   elements.modal.addEventListener('shown.bs.modal', function (e) {
     watcherState.currentPostId = e.relatedTarget.dataset.id
   })
+
+  const updatePosts = (watchedState) => {
+    const update = () => {
+      if (watchedState.addedChannels.length === 0) {
+        setTimeout(() => updatePosts(watchedState), 5000)
+        return
+      }
+
+      const promises = watchedState.addedChannels.map((feed) => {
+        getNews(watchedState, feed.link)
+      })
+
+      Promise.all(promises).then(res => console.log(res)).catch((e)=> console.log(e))
+      setTimeout(() => updatePosts(watchedState), 5000);
+    }
+
+    update()
+  }
+
+  updatePosts(watcherState)
 }
