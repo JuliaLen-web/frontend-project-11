@@ -17,12 +17,10 @@ export default function (elements, state, i18n) {
   return onChange(state, function (value, previousValue, applyData) {
     switch (value) {
       case 'posts':
-        let newPosts = differenceWith(previousValue, applyData)
-        renderPosts(elements, newPosts, i18n)
+        renderPosts(elements, differenceWith(previousValue, applyData), i18n)
         break
       case 'feeds':
-        let newFeed = differenceWith(previousValue, applyData)
-        renderFeeds(elements, newFeed, i18n)
+        renderFeeds(elements, differenceWith(previousValue, applyData), i18n)
         break
       case 'currentPostId':
         renderActivePostModal(state.posts, state.currentPostId)

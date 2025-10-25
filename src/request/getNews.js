@@ -4,12 +4,12 @@ import { processState } from '../app.js'
 import parserDOM from '../utility/parseXML.js'
 import { differenceWith } from 'lodash/array.js'
 
-const saveUrlData = ( data, link, state, isSavedFeed = false ) => {
+const saveUrlData = (data, link, state, isSavedFeed = false) => {
   const newChannelData = {
     link: link,
     data: data?.contents,
   }
-  if ( !isSavedFeed ) state.addedChannels.push({ ...newChannelData, id: uniqueId('feed_') })
+  if (!isSavedFeed) state.addedChannels.push({ ...newChannelData, id: uniqueId('feed_') })
   return newChannelData
 }
 
@@ -41,9 +41,9 @@ const getNews = (watcherState, url) => {
         }
 
         if (diffPosts.length > 0) {
-          const newPosts = diffPosts.map(post => {
+          const newPosts = diffPosts.map((post) => {
             post.id = uniqueId('post_')
-            post.feedId = watcherState.addedChannels?.find((channel) => channel.link === url).id
+            post.feedId = watcherState.addedChannels?.find(channel => channel.link === url).id
             return post
           })
 

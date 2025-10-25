@@ -9,7 +9,7 @@ const formatText = (text) => {
   return text.textContent.trim()
 }
 
-const parserDOM = ( watchState, newUrlData ) => {
+const parserDOM = (watchState, newUrlData) => {
   const feedDoc = new DOMParser().parseFromString(newUrlData.data, 'text/xml')
 
   const feed = {

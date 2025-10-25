@@ -81,7 +81,7 @@ export default function () {
         getNews(watchedState, feed.link)
       })
 
-      Promise.all(promises).then(res => console.log(res)).catch((e)=> console.log(e))
+      Promise.all(promises).then().catch(e => console.log(e))
       setTimeout(() => updatePosts(watchedState), 5000)
     }
 

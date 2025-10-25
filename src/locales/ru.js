@@ -13,7 +13,7 @@ export default {
         duplicate: 'RSS уже существует',
         network: 'Ошибка сети',
         isNotRss: 'Ресурс не содержит валидный RSS',
-      }
+      },
     },
     post: {
       name: 'Посты',
