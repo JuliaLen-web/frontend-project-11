@@ -12,19 +12,19 @@ export default {
         url: 'Ссылка должна быть валидным URL',
         duplicate: 'RSS уже существует',
         network: 'Ошибка сети',
-        isNotRss: 'Ресурс не содержит валидный RSS'
+        isNotRss: 'Ресурс не содержит валидный RSS',
       }
     },
     post: {
       name: 'Посты',
-      button: 'Просмотр'
+      button: 'Просмотр',
     },
     feed: {
-      name: 'Фиды'
+      name: 'Фиды',
     },
     modal: {
       readAll: 'Читать полностью',
-      close: 'Закрыть'
-    }
+      close: 'Закрыть',
+    },
   },
-};
+}

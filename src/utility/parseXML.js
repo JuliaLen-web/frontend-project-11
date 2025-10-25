@@ -9,8 +9,8 @@ const formatText = (text) => {
   return text.textContent.trim()
 }
 
-const parserDOM = (watchState, newUrlData ) => {
-  const feedDoc = new DOMParser().parseFromString(newUrlData.data, "text/xml")
+const parserDOM = ( watchState, newUrlData ) => {
+  const feedDoc = new DOMParser().parseFromString(newUrlData.data, 'text/xml')
 
   const feed = {
     title: formatText(feedDoc.querySelector(fields.title)),
@@ -20,7 +20,7 @@ const parserDOM = (watchState, newUrlData ) => {
 
   const postsDoc = feedDoc.querySelectorAll(fields.item)
   const posts = []
-  postsDoc.forEach(el => {
+  postsDoc.forEach((el) => {
     posts.push({
       title: formatText(el.querySelector(fields.title)),
       link: formatText(el.querySelector(fields.link)),

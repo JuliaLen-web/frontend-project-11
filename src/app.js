@@ -1,10 +1,10 @@
 import i18next from 'i18next'
 import resources from './locales/index'
 import initialHtml from './components/initialHtml.js'
-import view from "./view.js"
-import validate from "./utility/validateForm.js"
+import view from './view.js'
+import validate from './utility/validateForm.js'
 import { Modal } from 'bootstrap'
-import getNews from "./request/getNews.js"
+import getNews from './request/getNews.js'
 
 export const processState = {
   initial: 'initial',
@@ -20,7 +20,7 @@ export default function () {
     debug: true,
     resources: resources,
   }).then().catch((error) => {
-    console.error('i18next initialization failed:', error);
+    console.error('i18next initialization failed:', error)
   })
 
   initialHtml(i18nextInstance)
@@ -30,7 +30,7 @@ export default function () {
     error: document.querySelector('#feedback'),
     modal: document.querySelector('#modal'),
     posts: document.querySelector('#posts'),
-    feeds: document.querySelector('#feeds')
+    feeds: document.querySelector('#feeds'),
   }
 
   const initialState = {
@@ -43,7 +43,6 @@ export default function () {
     feeds: [],
     currentPostId: null,
     addedChannels: [],
-    test: 'klkl'
   }
 
   const handlerState = {}
@@ -83,7 +82,7 @@ export default function () {
       })
 
       Promise.all(promises).then(res => console.log(res)).catch((e)=> console.log(e))
-      setTimeout(() => updatePosts(watchedState), 5000);
+      setTimeout(() => updatePosts(watchedState), 5000)
     }
 
     update()

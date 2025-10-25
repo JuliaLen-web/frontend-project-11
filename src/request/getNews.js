@@ -1,15 +1,15 @@
-import axios from "axios"
-import {uniqueId} from "lodash"
-import { processState } from "../app.js"
-import parserDOM from "../utility/parseXML.js";
-import {differenceWith} from "lodash/array.js";
+import axios from 'axios'
+import { uniqueId } from 'lodash'
+import { processState } from '../app.js'
+import parserDOM from '../utility/parseXML.js'
+import { differenceWith } from 'lodash/array.js'
 
-const saveUrlData = (data, link, state, isSavedFeed = false ) => {
+const saveUrlData = ( data, link, state, isSavedFeed = false ) => {
   const newChannelData = {
     link: link,
     data: data?.contents,
   }
-  if (!isSavedFeed ) state.addedChannels.push({...newChannelData, id: uniqueId('feed_')})
+  if ( !isSavedFeed ) state.addedChannels.push({ ...newChannelData, id: uniqueId('feed_') })
   return newChannelData
 }
 
@@ -17,18 +17,17 @@ const getNews = (watcherState, url) => {
   const isSavedFeed = watcherState.addedChannels && watcherState.addedChannels.find(channel => channel.link === url)
 
   axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`, {
-    timeout: 10000 // Таймаут 10 секунд
+    timeout: 10000,
   })
-    .then(response => {
+    .then((response) => {
       if (response.status === 200) {
         return response.data
       }
       // throw new Error('Network response was not ok.')
     })
-    .then(data => {
+    .then((data) => {
       const xmlString = data?.contents
       if (xmlString && (xmlString.includes('<?xml') || xmlString.includes('<rss'))) {
-
         const newChannelData = saveUrlData(data, url, watcherState, isSavedFeed)
 
         const { posts } = parserDOM(watcherState, newChannelData)
@@ -44,19 +43,19 @@ const getNews = (watcherState, url) => {
         if (diffPosts.length > 0) {
           const newPosts = diffPosts.map(post => {
             post.id = uniqueId('post_')
-            post.feedId = watcherState.addedChannels?.find(channel => channel.link === url).id
+            post.feedId = watcherState.addedChannels?.find((channel) => channel.link === url).id
             return post
           })
 
           watcherState.posts.push(...newPosts)
         }
-
-      } else {
+      }
+      else {
         watcherState.form.error = 'form.errors.isNotRss'
       }
     })
-    .catch(error => {
-      if(isSavedFeed) return
+    .catch((error) => {
+      if (isSavedFeed) return
       switch (error.message) {
         case 'Network Error':
           watcherState.form.error = 'form.errors.network'
@@ -69,6 +68,5 @@ const getNews = (watcherState, url) => {
       watcherState.processState = processState.finished
     })
 }
-
 
 export default getNews

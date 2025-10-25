@@ -1,4 +1,4 @@
-import {processState} from "../app.js";
+import { processState } from '../app.js'
 
 export const renderActivePostModal = (posts, currentPostId) => {
   const modal = {
@@ -65,7 +65,7 @@ export const renderFeeds = (elements, newFeed, i18n) => {
     ulFeeds = elements.feeds.querySelector('ul')
   }
 
-  return ulFeeds ? newFeed.map(item => ulFeeds.prepend(renderFeedsItem(item)))  : console.error('Not found <ul> for feeds')
+  return ulFeeds ? newFeed.map(item => ulFeeds.prepend(renderFeedsItem(item))) : console.error('Not found <ul> for feeds')
 }
 
 const resetError = (input, feedback) => {
@@ -103,14 +103,16 @@ export const renderStatus = (elements, state, i18n) => {
       button.disabled = false
       if (form.error) {
         renderError(form.error, input, feedback, i18n)
-      } else {
+      }
+      else {
         renderSuccess(form.data, input, feedback, i18n)
       }
       break
     default:
       if (form.error) {
         renderError(form.error, input, feedback, i18n)
-      } else {
+      }
+      else {
         resetError(input, feedback)
       }
   }
