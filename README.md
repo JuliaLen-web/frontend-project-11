@@ -4,5 +4,10 @@
 ### Build status (include SonarQube):
 [![Build](https://github.com/JuliaLen-web/frontend-project-11/actions/workflows/build.yml/badge.svg)](https://github.com/JuliaLen-web/frontend-project-11/actions/workflows/build.yml)
 
-### Deployment details
-[Site on Vercel](https://frontend-project-11-one-gamma.vercel.app/)
+# [RSS aggregator link](https://frontend-project-11-one-gamma.vercel.app/)
+
+### Preview of project
+![Preview of project](./preview.png)
+
+You can add some links like [this](https://buzzfeed.com/world.xml) and you'll see links of posts with preview and opportunity go to post source.
+RSS aggregator tracks new posts every 5 seconds.
